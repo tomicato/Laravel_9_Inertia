@@ -26,6 +26,7 @@ class Portfolio extends Model
         $this->removePhoto($photo);
         $filename = $photo->getClientOriginalName();
         $photo->move(public_path('uploads/portfolio'), $filename);
+        //$path = $photo->store('public/uploads/portfolio');
         $portfolio->main_photo = $filename;
         $portfolio->save();
 

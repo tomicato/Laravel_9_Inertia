@@ -1,6 +1,7 @@
 <template>
-  <div class="d-flex w-75 mx-auto justify-content-xl-around align-items-center my-5">
-    <div class="d-flex w-100 justify-content-start align-items-center">
+  <!-- Navigation  -->
+  <nav class="navbar navbar-expand-lg bg-light w-75 mx-auto my-5" id="head_menu">
+    <div class="container-fluid">
       <Link :href="route('test')">
         <svg width="50" height="52" viewBox="0 0 50 52" xmlns="http://www.w3.org/2000/svg" class="me-5">
           <title>Lara Inertia</title>
@@ -9,61 +10,99 @@
               fill="#FF2D20" fill-rule="evenodd"/>
         </svg>
       </Link>
-      <Link :href="route('test')"
-            :class="`${$page.component === 'Test' ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline me-3 ms-5' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 ms-5 me-3'}`">
-        Home
-      </Link>
-      <Link :href="route('articles-mix.index')"
-            :class="`${$page.component === 'Articles/Index' ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline mx-3' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 mx-3'}`">
-        Articles
-      </Link>
-      <Link :href="route('portfolio.index')"
-            :class="`${$page.component === 'Portfolio/Index' ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline mx-3' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 mx-3'}`">
-        Portfolio
-      </Link>
-    </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse mt-3" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item mt-2">
+            <Link :href="route('test')"
+                  :class="`${$page.component === 'Test' ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline me-3 ms-0' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 ms-0 me-3'}`">
+              Home
+            </Link>
+          </li>
+          <li class="nav-item mt-2">
+            <Link :href="route('articles-mix.index')"
+                  :class="`${$page.component === 'Articles/Index' ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline mx-3 ms-0' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 ms-0 mx-3'}`">
+              Articles
+            </Link>
+          </li>
+          <li class="nav-item mt-2">
+            <Link :href="route('portfolio.index')"
+                  :class="`${$page.component === 'Portfolio/Index' ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline mx-3 ms-0' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 ms-0 mx-3'}`">
+              Portfolio
+            </Link>
+          </li>
 
 
-    <div class="d-flex w-100 justify-content-end align-items-center">
-      <!--      <a href="#" class="top_1 fw-normal text-decoration-none text-secondary fs-5 mx-3">{{ 'Admin' }}</a>-->
+          <li class="nav-item mt-2 dropdown">
+            <a class="top_1 fw-normal text-decoration-none text-secondary fs-5 mx-3  ms-0 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
 
-      <div v-if="$page.props.auth_user === null">
-        <Link :href="route('login.form')" class="top_1 fw-normal text-decoration-none text-secondary fs-5">{{
-            'Login'
-          }}
-        </Link>
+        </ul>
+
+        <div class="d-flex justify-content-start align-items-center">
+
+          <div v-if="$page.props.auth_user === null">
+            <Link :href="route('login.form')" class="top_1 fw-normal text-decoration-none text-secondary fs-5">{{
+                'Login'
+              }}
+            </Link>
+          </div>
+
+          <div v-else>
+            <Link :href="`#`"
+                  :class="`${$page.props.auth_user !== null ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline me-3' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 me-3'}`">
+              {{ $page.props.auth_user.name }}
+            </Link>
+            <Link href="/logout-mix" method="post" as="button" type="button" style="all: unset;cursor: pointer;"
+                  class="top_1 fw-normal text-decoration-none text-secondary fs-5">
+              {{ 'Logout' }}
+            </Link>
+
+
+          </div>
+        </div>
       </div>
-
-      <div v-else>
-        <Link :href="`#`"
-              :class="`${$page.props.auth_user !== null ? 'text-decoration-none text-secondary fs-5 fw-semibold t-underline me-3 ms-5' : 'top_1 fw-normal text-decoration-none text-secondary fs-5 ms-5 me-3'}`">
-          {{ $page.props.auth_user.name }}
-        </Link>
-        <Link href="/logout-mix" method="post" class="top_1 fw-normal text-decoration-none text-secondary fs-5">
-          {{ 'Logout' }}
-        </Link>
-
-
-      </div>
     </div>
-  </div>
+  </nav>
 
+  <!-- Flash Message  -->
   <div v-if="$page.props.flash.message" class="text-secondary text-center fs-3 fw-semibold">
     {{ $page.props.flash.message }}
   </div>
-  <slot/>
 
+  <!-- Main Content  -->
+  <div id="main_content">
+  <slot/>
+  </div>
+  <!-- Footer  -->
+  <Footer/>
 
 </template>
 
 
 <script>
 import {Link, useForm} from "@inertiajs/inertia-vue3"
+import Footer from "./Footer";
 
 export default {
   name: "Auth",
   components: {
-    Link
+    Link,
+    Footer
   },
   props: {
     flash: String,
@@ -82,14 +121,33 @@ export default {
     }
   }
 }
+
 </script>
 
-<style scoped>
+<style lang="scss">
 .t-underline {
   border-bottom: 0.001em solid #cccccc;
 }
 
 .top_1 {
   margin-top: -0.001em;
+}
+
+@media screen and (max-width: 1024px){
+  #head_menu{
+    width: 100%!important;
+    margin-top: 2rem!important;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.navbar-toggler:focus{
+  outline: 0;
+  box-shadow: unset!important;
+}
+
+#main_content{
+  min-height: 100vh;
 }
 </style>

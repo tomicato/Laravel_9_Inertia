@@ -1,5 +1,9 @@
 <template>
-  <Head title="Articles"/>
+  <Head>
+    <title>Articles</title>
+    <meta head-key="description" name="description" content="This is the default description" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+  </Head>
   <AppLayout>
     <div class="my-5 mx-auto w-75 text-center">
       <h2 class="text-center my-5 text-secondary fw-semibold">

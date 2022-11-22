@@ -16,7 +16,7 @@
           <div v-if="errors.content" class="text-danger fst-italic my-2">{{ errors.content }}</div>
         </div>
         <div class="d-flex flex-wrap gap-3 justify-content-around align-items-center mt-5 mb-3">
-          <Link :href="route('articles-mix.index')" class="btn btn-outline-primary"> Назад</Link>
+          <Link :href="route('articles-mix.index')" class="btn btn-outline-primary" preserve-scroll> Назад</Link>
           <button type="submit" class="btn btn-outline-secondary">Изменить</button>
         </div>
       </form>

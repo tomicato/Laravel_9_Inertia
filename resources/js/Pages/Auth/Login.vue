@@ -1,7 +1,7 @@
 <template>
   <Head title="Login"></Head>
   <AppLayout>
-    <div class="my-5 mx-auto w-50">
+    <div class="my-5 mx-auto w-50" style="min-height: 100vh;">
       <h1 class="text-center my-5 text-secondary fw-semibold text-decoration-none"><span class="text-primary border-bottom">{{ 'Вход' }}</span></h1>
       <form @submit.prevent="submit" class="w-50 mx-auto">
         <div class="mb-5">
