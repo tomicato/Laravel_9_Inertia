@@ -9,13 +9,25 @@ class Portfolio extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'anons', 'description', 'main_photo', 'price'];
+    protected $fillable = [
+        'title',
+        'anons',
+        'description',
+        //'main_photo',
+        'price'
+    ];
 
     public static function add($fields)
     {
         $portfolio = new self();
         $portfolio->fill($fields);
-       // $portfolio->main_photo = $name;
+        $portfolio->save();
+        return $portfolio;
+    }
+
+    public function edit($portfolio, $fields)
+    {
+        $portfolio->fill($fields);
         $portfolio->save();
         return $portfolio;
     }
@@ -26,7 +38,6 @@ class Portfolio extends Model
         $this->removePhoto($photo);
         $filename = $photo->getClientOriginalName();
         $photo->move(public_path('uploads/portfolio'), $filename);
-        //$path = $photo->store('public/uploads/portfolio');
         $portfolio->main_photo = $filename;
         $portfolio->save();
 
@@ -38,6 +49,20 @@ class Portfolio extends Model
         if (file_exists($path) && $photo != null) {
             unlink($path);
         }
+    }
+
+    public function editPhoto($portfolio, $photo = null)
+    {
+
+        if ($photo != null) {
+            $this->removePhoto($photo);
+            $filename = $photo->getClientOriginalName();
+            $photo->move(public_path('uploads/portfolio'), $filename);
+            $portfolio->main_photo = $filename;
+            $portfolio->save();
+        }
+
+
     }
 
     public function deletePhoto($photo_name)

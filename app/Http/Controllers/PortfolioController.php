@@ -7,13 +7,15 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
+use App\Http\Requests\PortfolioRequest;
+use App\Http\Resources\PortfolioResource;
 
 class PortfolioController extends Controller
 {
 
     public function index()
     {
-        $portfolio = Portfolio::all();
+        $portfolio = PortfolioResource::collection(Portfolio::all());
         return Inertia::render('Portfolio/Index', ['portfolio' => $portfolio]);
     }
 
@@ -24,9 +26,9 @@ class PortfolioController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(PortfolioRequest $request)
     {
-        $portfolio = Portfolio::add($request->all());
+        $portfolio = Portfolio::add($request->validated());
         $portfolio->uploadPhoto($portfolio, $request->file('main_photo'));
         return redirect()->route('portfolio.index')
             ->with('message', 'Работа успешно добавлена в портфолио!');
@@ -39,15 +41,19 @@ class PortfolioController extends Controller
     }
 
 
-    public function edit(Portfolio $portfolio)
+    public function edit($id)
     {
-        //
+        return Inertia::render('Portfolio/Edit', ['portfolio' => Portfolio::find($id)]);
     }
 
 
-    public function update(Request $request, Portfolio $portfolio)
+    public function update(PortfolioRequest $request, $id)
     {
-        //
+        $portfolio = Portfolio::find($id);
+        $portfolio->edit($portfolio, $request->validated());
+        $portfolio->editPhoto($portfolio, $request->file('main_photo'));
+        return redirect()->route('portfolio.index')
+            ->with('message', "Портфолио успешно отредактировано!");
     }
 
 

@@ -116,8 +116,6 @@ export default {
   methods: {
     logout(e) {
       e.preventDefault();
-      //axios.post('logout');
-      //window.location = route('articles-mix.index');
     }
   }
 }

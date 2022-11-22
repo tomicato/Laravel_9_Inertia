@@ -1,7 +1,7 @@
 <template>
   <Head :title="`Edit Article №${article.id}`"></Head>
   <AppLayout>
-    <div style="margin: 50px auto; width: 50%;">
+    <div id="articles_edit">
       <h1 class="text-center my-5 text-secondary fw-semibold">{{ `Редактировать статью «${article.title}»` }}</h1>
       <form @submit.prevent="form.put(route('articles-mix.update', article.id))">
         <div class="mb-5">
@@ -50,6 +50,14 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+#articles_edit{
+  margin: 50px auto;
+  width: 50%;
+}
+@media screen and (max-width: 1024px){
+  #articles_edit{
+    width: 85%;
+  }
+}
 </style>
