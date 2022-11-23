@@ -18,6 +18,17 @@ class LoginMix extends Controller
 
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->boolean('remember')
+        );
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only($this->username(), 'password');
+    }
 
     public function __construct()
     {

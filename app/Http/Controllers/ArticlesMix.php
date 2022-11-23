@@ -17,7 +17,9 @@ class ArticlesMix extends Controller
     {
        //dd(URL::route('articles-mix.create'));
         //dd(Auth::user());
-        $mix = MixResource::collection(Articles::all());
+        //$mix = MixResource::collection(Articles::all());
+        $mix = MixResource::collection(Articles::paginate(2));
+        //dd($mix);
         return Inertia::render('Articles/Index', ['mix' => $mix]);
     }
 

@@ -14,6 +14,15 @@
           <input name="password" id="password" class="form-control" type="password" v-model="form.password" />
           <div v-if="errors.password" class="text-danger fst-italic my-2">{{ errors.password }}</div>
         </div>
+
+        <div class="md-5">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="remember" id="remember" v-model="form.remember">
+            <label class="form-check-label" for="remember">
+              Remember Me
+            </label>
+          </div>
+        </div>
         <div class="d-flex flex-wrap gap-3 justify-content-around align-items-center mt-5 mb-3">
           <Link :href="route('articles-mix.index')" class="btn btn-outline-primary"> Назад</Link>
           <button type="submit" class="btn btn-outline-secondary">Войти</button>
@@ -46,6 +55,7 @@ export default {
     const form = reactive({
       email: '',
       password: '',
+      remember: false
 
     })
 

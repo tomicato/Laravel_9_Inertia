@@ -10,10 +10,10 @@
         <Link :href="route('articles-mix.create')" class="text-decoration-none">{{ 'Добавить статью' }}</Link>
 
       </h2>
-      <div class="card w-auto w-75 p-3 my-5 mx-auto" v-for="(article, ind) in mix" :key="ind">
+      <div class="card w-auto w-75 p-3 my-5 mx-auto" v-for="(article, ind) in mix.data" :key="ind">
         <h3 class=" mt-5 mb-3"><i class="bi bi-bar-chart"></i> {{ article.title }}</h3>
         <p>{{ article.content }}</p>
-        <p class="text-primary"><em>{{ date(ind) }}</em></p>
+       <p class="text-primary"><em>{{  date(article) }}</em></p>
         <div class="d-flex flex-wrap gap-3 justify-content-around align-items-center my-5">
           <Link :href="route('articles-mix.edit', article.id)" class="btn btn-outline-secondary">{{ 'Редактировать статью' }}</Link>
           <form @submit.prevent="form.delete(route('articles-mix.destroy', article.id))">
@@ -21,6 +21,8 @@
           </form>
         </div>
       </div>
+
+      <Pagination :links="mix.meta.links"/>
     </div>
   </AppLayout>
 </template>
@@ -28,6 +30,7 @@
 <script>
 import AppLayout from '../../Layouts/Auth.vue'
 import {Head, Link, useForm} from '@inertiajs/inertia-vue3'
+import Pagination from "../Pagination";
 
 export default {
   name: "Index",
@@ -46,7 +49,8 @@ export default {
     Head,
     Link,
     useForm,
-    AppLayout
+    AppLayout,
+    Pagination
   },
   setup () {
     const form = useForm({
@@ -55,20 +59,18 @@ export default {
     return { form }
   },
   created() {
-    //console.log(this.mix);
   },
   computed: {
 
   },
   mounted() {
-    //console.log(this.mix);
+    console.log(this.mix.meta.links);
   },
 
   methods: {
     date(i) {
-
       const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}
-      const dt = this.mix[i]['created_at']
+      const dt = i.created_at
       const ndt = new Date(dt)
 
       let hour = ndt.getUTCHours(),

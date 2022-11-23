@@ -15,7 +15,10 @@ class PortfolioController extends Controller
 
     public function index()
     {
-        $portfolio = PortfolioResource::collection(Portfolio::all());
+        //$portfolio = PortfolioResource::collection(Portfolio::all());
+        $portfolio = Portfolio::paginate(1);
+       // dd($portfolio);
+       //return Inertia::render('Portfolio/Index', ['portfolio' => $portfolio]);
         return Inertia::render('Portfolio/Index', ['portfolio' => $portfolio]);
     }
 
